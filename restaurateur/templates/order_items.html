@@ -1,0 +1,65 @@
+{% extends 'base_restaurateur_page.html' %}
+
+{% block title %}Необработанные заказы | Star Burger{% endblock %}
+
+{% block content %}
+  <center>
+    <h2>Необработанные заказы</h2>
+  </center>
+
+  <hr/>
+  <br/>
+  <br/>
+  <div class="container">
+   <table class="table table-responsive">
+    <tr>
+      <th>ID заказа</th>
+      <th>Статус</th>
+      <th>Способ оплаты</th>
+      <th>Клиент</th>
+      <th>Телефон</th>
+      <th>Адрес доставки</th>
+      <th>Комментарий</th>
+      <th>Ресторан</th>
+      <th>Стоимость заказа</th>
+      <th>Действия</th>
+    </tr>
+
+    {% for item in order_items %}
+      <tr>
+        <td>{{ item.id }}</td>
+        <td>{{ item.status_display }}</td>
+        <td>{{ item.payment_display }}</td>
+        <td>{{ item.firstname }} {{ item.lastname }}</td>
+        <td>{{ item.phonenumber }}</td>
+        <td>{{ item.address }}</td>
+        <td>{{ item.comment }}</td>
+        <td>
+          {% if item.restaurant %}
+            Заказ готовит - {{ item.restaurant }}
+          {% else %}
+            <details>
+              <summary style="cursor: pointer">Развернуть</summary>
+              <ul>
+                {% if not item.suitable_restaurants %}
+                  <li>Ни один ресторан не может приготовить заказ полностью.</li>
+                {% else %}
+                  {% for restaurant in item.suitable_restaurants %}
+                    <li>{{ restaurant.name }}
+                      {% if restaurant.readable_distance %}
+                        - {{ restaurant.readable_distance }}
+                      {% endif %}
+                    </li>
+                  {% endfor %}
+                {% endif %}
+          {% endif %}
+          </ul>
+          </details>
+        </td>
+        <td>{{ item.total_amount }}</td>
+        <td><a href="{% url 'admin:foodcartapp_order_change' item.id %}?next={{ request.path|urlencode}}">ред.</a></td>
+      </tr>
+    {% endfor %}
+   </table>
+  </div>
+{% endblock %}
