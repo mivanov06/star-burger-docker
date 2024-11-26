@@ -9,8 +9,8 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import views as auth_views
 from geopy.distance import distance
 
-from foodcartapp.models import Product, Restaurant, Order, RestaurantMenuItem, Place
-from star_burger import settings
+from backend.foodcartapp import Product, Restaurant, Order, RestaurantMenuItem, Place
+from backend.star_burger import settings
 
 
 class Login(forms.Form):

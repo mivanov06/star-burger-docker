@@ -2,7 +2,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.transaction import atomic
 from rest_framework import serializers
 
-from foodcartapp.models import ProductOrderItem, Order, Product
+from backend.foodcartapp.models import ProductOrderItem, Order, Product
 
 
 class OrderedItemSerializer(serializers.ModelSerializer):
